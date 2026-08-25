@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CT201 – Lesson M1.2 Practice: Weak-Sense vs. Strong-Sense Thinking</title>
+<style>
+  :root{
+    --maroon:#8D183C;
+    --steel:#2E5F8A;
+    --amber:#B8860B;
+    --green:#2E7D32;
+    --red:#B3261E;
+    --ink:#222222;
+    --paper:#FFFFFF;
+    --panel:#F4F4F4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    font-size:16px;
+    line-height:1.5;
+  }
+  h1,h2,h3{font-family:Arial, Helvetica, sans-serif; margin:0 0 8px 0;}
+  .header{
+    background:var(--maroon);
+    color:#fff;
+    padding:18px 20px;
+  }
+  .header .course{
+    font-size:15px;
+    letter-spacing:0.03em;
+    opacity:0.9;
+    margin-bottom:4px;
+  }
+  .header h1{
+    font-size:clamp(20px,4vw,28px);
+    margin:0;
+  }
+  .progress{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:#ffffff;
+    border-bottom:2px solid var(--panel);
+    display:flex;
+    overflow-x:auto;
+    padding:10px 8px;
+    gap:6px;
+  }
+  .progress .step{
+    flex:1 0 auto;
+    min-width:64px;
+    text-align:center;
+    padding:8px 6px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:bold;
+    color:var(--steel);
+    background:var(--panel);
+    white-space:nowrap;
+  }
+  .progress .step.active{
+    background:var(--steel);
+    color:#fff;
+  }
+  main{
+    max-width:900px;
+    margin:0 auto;
+    padding:0 16px;
+  }
+  section.block{
+    padding:28px 0;
+    border-bottom:1px solid #e6e6e6;
+  }
+  section.block:last-of-type{border-bottom:none;}
+  .eyebrow{
+    display:inline-block;
+    font-size:13px;
+    font-weight:bold;
+    color:var(--maroon);
+    background:#FBEAF0;
+    border:1px solid var(--maroon);
+    border-radius:999px;
+    padding:4px 12px;
+    margin-bottom:10px;
+  }
+  .activity h2{
+    font-size:clamp(20px,3.4vw,26px);
+    color:var(--maroon);
+  }
+  .instructions{
+    font-size:16px;
+    color:#444;
+    margin-bottom:16px;
+  }
+  input[type="text"]{
+    width:100%;
+    max-width:420px;
+    font-size:20px;
+    padding:12px 14px;
+    border:2px solid var(--steel);
+    border-radius:10px;
+    font-family:Arial, Helvetica, sans-serif;
+  }
+  label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+    font-size:18px;
+  }
+  button{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:20px;
+    min-height:44px;
+    min-width:44px;
+    padding:10px 18px;
+    border-radius:10px;
+    border:2px solid var(--steel);
+    background:#fff;
+    color:var(--steel);
+    cursor:pointer;
+    font-weight:bold;
+  }
+  button:hover{background:#eaf1f7;}
+  button.primary{
+    background:var(--steel);
+    color:#fff;
+  }
+  button.primary:hover{background:#254e73;}
+  button:disabled{opacity:0.5;cursor:default;}
+
+  /* Activity 1: Matching / Sorting */
+  .sort-wrap{display:flex;flex-wrap:wrap;gap:20px;}
+  .sort-bank{
+    flex:1 1 260px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .sort-item{
+    border:2px solid var(--steel);
+    border-radius:10px;
+    padding:12px 14px;
+    font-size:16px;
+    background:#fff;
+    cursor:pointer;
+    min-height:44px;
+    display:flex;
+    align-items:center;
+  }
+  .sort-item.selected{
+    background:#eaf1f7;
+    border-color:var(--maroon);
+  }
+  .sort-item.placed{
+    opacity:0.45;
+    cursor:default;
+  }
+  .sort-targets{
+    flex:1 1 260px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .sort-target{
+    border:3px dashed var(--amber);
+    border-radius:12px;
+    padding:14px;
+    min-height:120px;
+  }
+  .sort-target h3{color:var(--amber); font-size:18px;}
+  .sort-target .dropped{
+    font-size:15px;
+    border-radius:8px;
+    padding:8px 10px;
+    margin-top:8px;
+  }
+  .dropped.correct{background:#E6F0E8; border:1px solid var(--green); color:var(--green);}
+  .dropped.incorrect{background:#FBE7E5; border:1px solid var(--red); color:var(--red);}
+
+  /* Activity 2: Quiz */
+  .quiz-score{font-weight:bold; color:var(--steel); margin-bottom:14px; font-size:18px;}
+  .quiz-q{margin-bottom:26px;}
+  .quiz-q p.qtext{font-size:20px; font-weight:bold; margin-bottom:10px;}
+  .quiz-opt{
+    display:block;
+    width:100%;
+    text-align:left;
+    border:2px solid var(--steel);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:8px;
+    background:#fff;
+    color:var(--ink);
+    font-size:16px;
+    min-height:44px;
+    cursor:pointer;
+  }
+  .quiz-opt.correct{background:#E6F0E8; border-color:var(--green); color:var(--green); font-weight:bold;}
+  .quiz-opt.incorrect{background:#FBE7E5; border-color:var(--red); color:var(--red);}
+  .quiz-opt:disabled{cursor:default;}
+  .quiz-fb{font-size:15px; margin-top:6px; font-style:italic;}
+
+  /* Activity 3: Ordering */
+  .order-bank{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; min-height:44px;}
+  .order-chip{
+    border:2px solid var(--amber);
+    border-radius:999px;
+    padding:10px 16px;
+    background:#fff;
+    color:var(--amber);
+    font-weight:bold;
+    cursor:pointer;
+    font-size:16px;
+    min-height:44px;
+  }
+  .order-chip.used{opacity:0.35; cursor:default;}
+  .order-slots{display:flex; flex-direction:column; gap:10px; margin-bottom:16px;}
+  .order-slot{
+    border:2px solid var(--steel);
+    border-radius:10px;
+    min-height:52px;
+    display:flex;
+    align-items:center;
+    padding:0 14px;
+    font-size:16px;
+    color:#888;
+  }
+  .order-slot.filled{color:var(--ink); font-weight:bold; border-style:solid;}
+  .order-slot.correct{border-color:var(--green); background:#E6F0E8; color:var(--green);}
+  .order-slot.incorrect{border-color:var(--red); background:#FBE7E5; color:var(--red);}
+  .order-result{margin-top:10px; font-weight:bold;}
+
+  /* Activity 4: Branching */
+  .scenario-box{
+    border:2px solid var(--maroon);
+    background:#FBEAF0;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:16px;
+    font-size:17px;
+  }
+  .scenario-choice{
+    display:block;
+    width:100%;
+    text-align:left;
+    border:2px solid var(--steel);
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:10px;
+    background:#fff;
+    font-size:16px;
+    min-height:44px;
+    cursor:pointer;
+  }
+  .scenario-choice:hover{background:#eaf1f7;}
+  .scenario-feedback{
+    border-radius:10px;
+    padding:12px 14px;
+    margin-bottom:14px;
+    font-size:15px;
+  }
+  .scenario-feedback.gold{background:#E6F0E8; border:1px solid var(--green); color:var(--green);}
+  .scenario-feedback.grey{background:#FFF3DA; border:1px solid var(--amber); color:#6B4E00;}
+
+  /* Results */
+  .results-box{
+    border:3px solid var(--maroon);
+    border-radius:14px;
+    padding:22px;
+    background:#FBEAF0;
+  }
+  .results-name{font-size:20px; font-weight:bold; margin-bottom:12px; color:var(--maroon);}
+  .results-line{
+    display:flex;
+    justify-content:space-between;
+    font-size:17px;
+    padding:8px 0;
+    border-bottom:1px solid #f0c9d6;
+  }
+  .results-line span.status{font-weight:bold; color:var(--steel);}
+  .screenshot-callout{
+    margin-top:18px;
+    background:#fff;
+    border:2px dashed var(--steel);
+    border-radius:10px;
+    padding:14px;
+    font-size:15px;
+  }
+  .screenshot-callout b{color:var(--steel);}
+  kbd{
+    background:var(--panel);
+    border:1px solid #ccc;
+    border-radius:5px;
+    padding:2px 7px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+  }
+  footer{
+    text-align:center;
+    padding:20px;
+    font-size:14px;
+    color:#777;
+  }
+  .icon{vertical-align:middle; margin-right:8px;}
+  @media (max-width:480px){
+    .sort-wrap{flex-direction:column;}
+    .progress .step{font-size:11px; min-width:52px;}
+  }
+</style>
+</head>
+<body>
+
+<section id="header-block">
+  <div class="header">
+    <div class="course">CT201 · Critical Thinking &amp; Problem Solving</div>
+    <h1>Lesson M1.2 Practice: Weak-Sense vs. Strong-Sense Thinking</h1>
+  </div>
+  <nav class="progress" id="progressBar">
+    <div class="step" data-target="activity1">1 · Sort</div>
+    <div class="step" data-target="activity2">2 · Quiz</div>
+    <div class="step" data-target="activity3">3 · Order</div>
+    <div class="step" data-target="activity4">4 · Scenario</div>
+    <div class="step" data-target="results">R · Results</div>
+  </nav>
+</section>
+
+<main>
+
+<section class="block" id="name-section">
+  <label for="studentName">Enter your name to begin.</label>
+  <input type="text" id="studentName" placeholder="Type your name here" autocomplete="off">
+</section>
+
+<section class="block activity" id="activity1">
+  <span class="eyebrow">Activity 1 · Sort the Thinking Style</span>
+  <h2>Weak-Sense or Strong-Sense?</h2>
+  <p class="instructions">Click a statement below. Then click the box where it belongs. You can try again as many times as you like.</p>
+  <div class="sort-wrap">
+    <div class="sort-bank" id="sortBank"></div>
+    <div class="sort-targets">
+      <div class="sort-target" id="targetWeak">
+        <h3>Weak-Sense</h3>
+        <div class="dropped-list" id="droppedWeak"></div>
+      </div>
+      <div class="sort-target" id="targetStrong">
+        <h3>Strong-Sense</h3>
+        <div class="dropped-list" id="droppedStrong"></div>
+      </div>
+    </div>
+  </div>
+  <p class="order-result" id="sortStatus">Sorted: 0 / 6</p>
+</section>
+
+<section class="block activity" id="activity2">
+  <span class="eyebrow">Activity 2 · Quick Quiz</span>
+  <h2>Test What You Know</h2>
+  <p class="instructions">Choose one answer for each question. You will see if you are right straight away.</p>
+  <p class="quiz-score" id="quizScore">Score: 0 / 5</p>
+  <div id="quizContainer"></div>
+</section>
+
+<section class="block activity" id="activity3">
+  <span class="eyebrow">Activity 3 · Put It In Order</span>
+  <h2>Build the Self-Check Framework</h2>
+  <p class="instructions">Click the steps below in the correct order. Then press Check.</p>
+  <div class="order-bank" id="orderBank"></div>
+  <div class="order-slots" id="orderSlots"></div>
+  <button id="checkOrderBtn">Check My Order</button>
+  <button id="resetOrderBtn">Reset</button>
+  <p class="order-result" id="orderStatus"></p>
+</section>
+
+<section class="block activity" id="activity4">
+  <span class="eyebrow">Activity 4 · SOC Challenge</span>
+  <h2>The Firewall Alert</h2>
+  <p class="instructions">Read each part of the story. Choose what the analyst should do next.</p>
+  <div id="scenarioContainer"></div>
+</section>
+
+<section class="block" id="results">
+  <div class="results-box">
+    <h2 style="color:var(--maroon);">Results Summary</h2>
+    <div class="results-name" id="resultsName">Name: (not entered yet)</div>
+    <div class="results-line"><span>Sort the Thinking Style</span><span class="status" id="resSort">Not started</span></div>
+    <div class="results-line"><span>Quick Quiz</span><span class="status" id="resQuiz">Not started</span></div>
+    <div class="results-line"><span>Put It In Order</span><span class="status" id="resOrder">Not started</span></div>
+    <div class="results-line"><span>SOC Challenge</span><span class="status" id="resScenario">Not started</span></div>
+    <div class="screenshot-callout">
+      <b>Almost done!</b> Take a screenshot of this Results Summary box and send it to your instructor as proof of completion.<br>
+      Windows: <kbd>Win</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd> &nbsp; | &nbsp; Mac: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>4</kbd>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section id="footer-block">
+  <footer>This page works fully offline. No internet connection is needed once it is open.</footer>
+</section>
+
+<script>
+(function(){
+  "use strict";
+
+  function shuffle(arr){
+    for(var i=arr.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var t=arr[i]; arr[i]=arr[j]; arr[j]=t;
+    }
+    return arr;
+  }
+
+  /* ---------- Name box ---------- */
+  var nameInput=document.getElementById("studentName");
+  var resultsName=document.getElementById("resultsName");
+  nameInput.addEventListener("input",function(){
+    var v=nameInput.value.trim();
+    resultsName.textContent = v ? ("Name: " + v) : "Name: (not entered yet)";
+  });
+
+  /* ---------- Activity 1: Sort ---------- */
+  var sortItems=[
+    {text:"Only asks questions about someone else's report.", cat:"weak"},
+    {text:"Checks her own conclusion before she acts on it.", cat:"strong"},
+    {text:"Trusts his own memory without checking any evidence.", cat:"weak"},
+    {text:"Asks what evidence would change his mind.", cat:"strong"},
+    {text:"Never doubts a plan he wrote himself.", cat:"weak"},
+    {text:"Tests her own claim the same way she tests others'.", cat:"strong"}
+  ];
+  shuffle(sortItems);
+  var sortBank=document.getElementById("sortBank");
+  var selectedItem=null;
+  var sortedCount=0;
+  var sortTotal=sortItems.length;
+
+  function renderSortBank(){
+    sortBank.innerHTML="";
+    sortItems.forEach(function(item,idx){
+      var div=document.createElement("div");
+      div.className="sort-item";
+      div.textContent=item.text;
+      div.dataset.idx=idx;
+      if(item.placed){
+        div.classList.add("placed");
+      } else {
+        div.addEventListener("click",function(){
+          if(item.placed) return;
+          document.querySelectorAll(".sort-item").forEach(function(el){el.classList.remove("selected");});
+          selectedItem=item;
+          div.classList.add("selected");
+        });
+      }
+      sortBank.appendChild(div);
+    });
+  }
+  renderSortBank();
+
+  function dropInto(targetCat, targetElId){
+    return function(){
+      if(!selectedItem || selectedItem.placed) return;
+      var correct = selectedItem.cat === targetCat;
+      var holder=document.getElementById(targetElId);
+      var row=document.createElement("div");
+      row.className="dropped " + (correct ? "correct" : "incorrect");
+      row.textContent = selectedItem.text + (correct ? "  ✓ Correct!" : "  ✗ Try a different box.");
+      holder.appendChild(row);
+      if(correct){
+        selectedItem.placed=true;
+        sortedCount++;
+        renderSortBank();
+        document.getElementById("sortStatus").textContent = "Sorted: " + sortedCount + " / " + sortTotal;
+        updateResults();
+      }
+      selectedItem=null;
+    };
+  }
+  document.getElementById("targetWeak").addEventListener("click",dropInto("weak","droppedWeak"));
+  document.getElementById("targetStrong").addEventListener("click",dropInto("strong","droppedStrong"));
+  document.getElementById("sortStatus").textContent = "Sorted: 0 / " + sortTotal;
+
+  /* ---------- Activity 2: Quiz ---------- */
+  var quizData=[
+    {
+      q:"What does weak-sense thinking mainly question?",
+      opts:["Other people's arguments only","Your own claims as well as others'","Facts that are already well proven","Numbers found in official reports"],
+      correct:0,
+      fb:["Right — weak-sense thinking only looks outward.","Not quite — weak-sense thinking does not check your own ideas.","Not quite — this is not about proven facts.","Not quite — this is not mainly about report numbers."]
+    },
+    {
+      q:"What does strong-sense thinking mainly question?",
+      opts:["Ideas that come from senior staff only","Opinions shared in team meetings only","Reports written by outside auditors only","Both your own claims and other people's"],
+      correct:3,
+      fb:["Not quite — it is not limited to senior staff.","Not quite — it is not limited to meetings.","Not quite — it is not limited to auditors.","Right — strong-sense thinking checks both sides."]
+    },
+    {
+      q:"In the self-check framework, what comes right after \"State Your Claim\"?",
+      opts:["Revise your claim if needed","Question your own reasons","Look for counter-evidence","Share your claim with a team"],
+      correct:1,
+      fb:["Not quite — revising comes later.","Right — you question your own reasons next.","Not quite — counter-evidence comes after that.","Not quite — sharing is not a framework step."]
+    },
+    {
+      q:"Which statement corrects the misconception about strong-sense thinking?",
+      opts:["It means doubting every fact you already know","It only questions your own settled beliefs","It still lets you act on well-supported claims","It removes the need for any evidence at all"],
+      correct:2,
+      fb:["Not quite — settled facts do not need doubting.","Not quite — it questions both sides, not only yourself.","Right — strong-sense thinking still lets you act.","Not quite — evidence still matters a lot."]
+    },
+    {
+      q:"A SOC lead double-checks her own shift report before sending it. This shows:",
+      opts:["Strong-sense thinking about her own work","Weak-sense thinking about her own work","No real thinking about her own work","Thinking that only judges other people"],
+      correct:0,
+      fb:["Right — she is questioning her own conclusion.","Not quite — weak-sense would skip this step.","Not quite — checking your own work is real thinking.","Not quite — this example is about her own work."]
+    }
+  ];
+  var quizContainer=document.getElementById("quizContainer");
+  var quizScoreEl=document.getElementById("quizScore");
+  var quizScore=0;
+  var quizAnswered=0;
+
+  quizData.forEach(function(item,qi){
+    var order=[0,1,2,3];
+    shuffle(order);
+    var block=document.createElement("div");
+    block.className="quiz-q";
+    var qtext=document.createElement("p");
+    qtext.className="qtext";
+    qtext.textContent=(qi+1)+". "+item.q;
+    block.appendChild(qtext);
+    var fbEl=document.createElement("div");
+    fbEl.className="quiz-fb";
+
+    order.forEach(function(origIdx){
+      var btn=document.createElement("button");
+      btn.className="quiz-opt";
+      btn.textContent=item.opts[origIdx];
+      btn.addEventListener("click",function(){
+        var allBtns=block.querySelectorAll(".quiz-opt");
+        allBtns.forEach(function(b){b.disabled=true;});
+        var isCorrect = origIdx===item.correct;
+        btn.classList.add(isCorrect?"correct":"incorrect");
+        if(!isCorrect){
+          allBtns.forEach(function(b,i2){
+            if(b.textContent===item.opts[item.correct]) b.classList.add("correct");
+          });
+        }
+        fbEl.textContent=item.fb[origIdx];
+        block.appendChild(fbEl);
+        if(isCorrect) quizScore++;
+        quizAnswered++;
+        quizScoreEl.textContent="Score: "+quizScore+" / "+quizData.length;
+        updateResults();
+      });
+      block.appendChild(btn);
+    });
+    quizContainer.appendChild(block);
+  });
+
+  /* ---------- Activity 3: Ordering ---------- */
+  var orderSteps=[
+    "State Your Claim",
+    "Question Your Reasons",
+    "Look For Counter-Evidence",
+    "Revise If Needed"
+  ];
+  var shuffledSteps=orderSteps.slice();
+  shuffle(shuffledSteps);
+  var orderBank=document.getElementById("orderBank");
+  var orderSlots=document.getElementById("orderSlots");
+  var placedSlots=[null,null,null,null];
+
+  function renderOrderBank(){
+    orderBank.innerHTML="";
+    shuffledSteps.forEach(function(step){
+      var chip=document.createElement("div");
+      chip.className="order-chip";
+      chip.textContent=step;
+      var used = placedSlots.indexOf(step) !== -1;
+      if(used) chip.classList.add("used");
+      chip.addEventListener("click",function(){
+        if(used) return;
+        var emptyIdx=placedSlots.indexOf(null);
+        if(emptyIdx===-1) return;
+        placedSlots[emptyIdx]=step;
+        renderOrderBank();
+        renderOrderSlots();
+      });
+      orderBank.appendChild(chip);
+    });
+  }
+  function renderOrderSlots(){
+    orderSlots.innerHTML="";
+    placedSlots.forEach(function(val,i){
+      var slot=document.createElement("div");
+      slot.className="order-slot"+(val?" filled":"");
+      slot.textContent = (i+1)+". "+(val || "Click a step below to place it here");
+      slot.addEventListener("click",function(){
+        if(!val) return;
+        placedSlots[i]=null;
+        renderOrderBank();
+        renderOrderSlots();
+      });
+      orderSlots.appendChild(slot);
+    });
+  }
+  renderOrderBank();
+  renderOrderSlots();
+
+  document.getElementById("checkOrderBtn").addEventListener("click",function(){
+    if(placedSlots.indexOf(null)!==-1){
+      document.getElementById("orderStatus").textContent="Please place all four steps first.";
+      document.getElementById("orderStatus").style.color="var(--amber)";
+      return;
+    }
+    var allCorrect=true;
+    var slotEls=orderSlots.querySelectorAll(".order-slot");
+    placedSlots.forEach(function(val,i){
+      var ok = val===orderSteps[i];
+      slotEls[i].classList.add(ok?"correct":"incorrect");
+      if(!ok) allCorrect=false;
+    });
+    var statusEl=document.getElementById("orderStatus");
+    if(allCorrect){
+      statusEl.textContent="Correct! That is the full self-check framework.";
+      statusEl.style.color="var(--green)";
+      orderResult="Correct";
+    } else {
+      statusEl.textContent="Not quite in order yet. Try again!";
+      statusEl.style.color="var(--red)";
+      orderResult="Not yet correct";
+    }
+    updateResults();
+  });
+  document.getElementById("resetOrderBtn").addEventListener("click",function(){
+    placedSlots=[null,null,null,null];
+    renderOrderBank();
+    renderOrderSlots();
+    document.getElementById("orderStatus").textContent="";
+    orderResult=null;
+    updateResults();
+  });
+  var orderResult=null;
+
+  /* ---------- Activity 4: Branching Scenario ---------- */
+  var scenarioContainer=document.getElementById("scenarioContainer");
+  var goldCount=0;
+  var scenarioStep=0;
+  var scenarioTotal=3;
+  var scenarioDone=false;
+
+  var scenarioSteps=[
+    {
+      text:"Sam, a junior SOC analyst, sees a firewall alert. The automated system already labelled it “low risk.”",
+      choices:[
+        {label:"Trust the label and close the alert right away.", gold:false, fb:"That skips a question. A low-risk label is still just a claim — it can be wrong."},
+        {label:"Ask what evidence supports the “low risk” label.", gold:true, fb:"Good move. You are questioning the system's claim, not just accepting it."}
+      ]
+    },
+    {
+      text:"The evidence looks thin. It comes from an old rule nobody has checked in months.",
+      choices:[
+        {label:"Question the old rule and check the raw traffic data.", gold:true, fb:"Strong-sense thinking in action — you looked past the old assumption."},
+        {label:"Leave it alone since the system already decided.", gold:false, fb:"This trusts the system without checking. That is weak-sense thinking."}
+      ]
+    },
+    {
+      text:"The raw data shows something unusual. But Sam wrote a report an hour ago saying everything was fine.",
+      choices:[
+        {label:"Stick with the first report to avoid looking unsure.", gold:false, fb:"This protects Sam's pride, not the truth. Strong-sense thinking questions your own past claims too."},
+        {label:"Update the report — question your own first conclusion too.", gold:true, fb:"Excellent. Strong-sense thinking checks your own claims, not only other people's."}
+      ]
+    }
+  ];
+
+  function renderScenario(){
+    scenarioContainer.innerHTML="";
+    if(scenarioStep>=scenarioSteps.length){
+      scenarioDone=true;
+      var summary=document.createElement("div");
+      summary.className="scenario-box";
+      summary.innerHTML="<b>Shift complete!</b> You made "+goldCount+" out of "+scenarioTotal+" strong-sense (gold) choices.";
+      scenarioContainer.appendChild(summary);
+      var tryAgain=document.createElement("button");
+      tryAgain.className="primary";
+      tryAgain.textContent="Try Again";
+      tryAgain.addEventListener("click",function(){
+        scenarioStep=0; goldCount=0; scenarioDone=false;
+        renderScenario();
+        updateResults();
+      });
+      scenarioContainer.appendChild(tryAgain);
+      updateResults();
+      return;
+    }
+    var step=scenarioSteps[scenarioStep];
+    var box=document.createElement("div");
+    box.className="scenario-box";
+    box.textContent=step.text;
+    scenarioContainer.appendChild(box);
+    step.choices.forEach(function(choice){
+      var btn=document.createElement("button");
+      btn.className="scenario-choice";
+      btn.textContent=choice.label;
+      btn.addEventListener("click",function(){
+        if(choice.gold) goldCount++;
+        var fb=document.createElement("div");
+        fb.className="scenario-feedback "+(choice.gold?"gold":"grey");
+        fb.textContent=choice.fb;
+        box.parentNode.insertBefore(fb, box.nextSibling);
+        Array.from(scenarioContainer.querySelectorAll(".scenario-choice")).forEach(function(b){b.disabled=true; b.style.cursor="default";});
+        var nextBtn=document.createElement("button");
+        nextBtn.className="primary";
+        nextBtn.textContent = (scenarioStep < scenarioSteps.length-1) ? "Continue" : "See Summary";
+        nextBtn.addEventListener("click",function(){
+          scenarioStep++;
+          renderScenario();
+        });
+        scenarioContainer.appendChild(nextBtn);
+      });
+      scenarioContainer.appendChild(btn);
+    });
+  }
+  renderScenario();
+
+  /* ---------- Results ---------- */
+  function updateResults(){
+    document.getElementById("resSort").textContent = sortedCount + " / " + sortTotal;
+    document.getElementById("resQuiz").textContent = quizAnswered>0 ? (quizScore + " / " + quizData.length) : "Not started";
+    document.getElementById("resOrder").textContent = orderResult ? orderResult : "Not started";
+    document.getElementById("resScenario").textContent = scenarioDone ? (goldCount + " / " + scenarioTotal + " gold choices") : (scenarioStep>0 ? "In progress" : "Not started");
+  }
+  updateResults();
+
+  /* ---------- Progress indicator (scroll highlight) ---------- */
+  var steps=Array.from(document.querySelectorAll(".progress .step"));
+  var sectionIds=["activity1","activity2","activity3","activity4","results"];
+  var sectionEls=sectionIds.map(function(id){return document.getElementById(id);});
+
+  steps.forEach(function(stepEl){
+    stepEl.addEventListener("click",function(){
+      var target=document.getElementById(stepEl.dataset.target);
+      if(target) target.scrollIntoView({behavior:"smooth", block:"start"});
+    });
+  });
+
+  function onScroll(){
+    var scrollPos = window.scrollY + 120;
+    var activeIdx=0;
+    sectionEls.forEach(function(el,i){
+      if(el && el.offsetTop <= scrollPos) activeIdx=i;
+    });
+    steps.forEach(function(s,i){ s.classList.toggle("active", i===activeIdx); });
+  }
+  window.addEventListener("scroll", onScroll);
+  onScroll();
+
+})();
+</script>
+
+</body>
+</html>
