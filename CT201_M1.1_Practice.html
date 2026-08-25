@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CT201 – Lesson M1.1 Practice: What Is Critical Thinking?</title>
+<style>
+  :root{
+    --maroon:#8D183C;
+    --steel:#2E5F8A;
+    --amber:#B8860B;
+    --green:#2E7D32;
+    --red:#B3261E;
+    --white:#FFFFFF;
+    --bg-grey:#F7F5F3;
+    --text:#2A2A2A;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--white);
+    color:var(--text);
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:16px;
+    line-height:1.5;
+  }
+
+  header.top{
+    background:var(--maroon);
+    color:var(--white);
+    padding:16px 20px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+
+  header.top .logo{
+    width:44px;
+    height:44px;
+    flex:none;
+  }
+
+  header.top .titles{
+    flex:1;
+    min-width:200px;
+  }
+
+  header.top .course-name{
+    font-size:14px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    opacity:0.9;
+    margin:0;
+  }
+
+  header.top h1{
+    font-size:22px;
+    margin:2px 0 0 0;
+    line-height:1.25;
+  }
+
+  /* Progress bar */
+  .progress-wrap{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:var(--white);
+    border-bottom:2px solid #EEE6E9;
+    padding:10px 12px;
+  }
+
+  .progress-track{
+    display:flex;
+    max-width:900px;
+    margin:0 auto;
+    gap:6px;
+  }
+
+  .progress-step{
+    flex:1;
+    text-align:center;
+  }
+
+  .progress-step .dot{
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    background:#E4E4E4;
+    color:#777;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 4px auto;
+    font-weight:bold;
+    font-size:15px;
+    border:2px solid #E4E4E4;
+    transition:all .25s ease;
+  }
+
+  .progress-step .label{
+    font-size:12px;
+    color:#777;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:0.4px;
+  }
+
+  .progress-step.active .dot{
+    background:var(--steel);
+    border-color:var(--steel);
+    color:var(--white);
+  }
+
+  .progress-step.active .label{ color:var(--steel); }
+
+  .progress-step.done .dot{
+    background:var(--green);
+    border-color:var(--green);
+    color:var(--white);
+  }
+
+  .progress-step.done .label{ color:var(--green); }
+
+  main{
+    max-width:900px;
+    margin:0 auto;
+    padding:14px 16px 60px 16px;
+  }
+
+  section.activity{
+    background:var(--white);
+    border:2px solid #EEE6E9;
+    border-radius:14px;
+    padding:20px 18px;
+    margin:22px 0;
+    scroll-margin-top:90px;
+  }
+
+  .activity-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:6px;
+  }
+
+  .activity-head .icon{
+    width:40px;
+    height:40px;
+    flex:none;
+  }
+
+  .activity-head h2{
+    font-size:21px;
+    margin:0;
+    color:var(--maroon);
+  }
+
+  .activity-sub{
+    font-size:16px;
+    color:#555;
+    margin:4px 0 16px 0;
+  }
+
+  .badge{
+    display:inline-block;
+    background:var(--steel);
+    color:var(--white);
+    font-size:12px;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    padding:3px 10px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+
+  /* Buttons */
+  button{
+    font-family:inherit;
+    cursor:pointer;
+  }
+
+  .btn{
+    min-height:44px;
+    padding:10px 18px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:10px;
+    border:2px solid transparent;
+    background:var(--steel);
+    color:var(--white);
+    transition:transform .1s ease, background .2s ease;
+  }
+
+  .btn:active{ transform:scale(0.97); }
+
+  .btn.amber{ background:var(--amber); }
+  .btn.maroon{ background:var(--maroon); }
+  .btn.green{ background:var(--green); }
+  .btn.outline{
+    background:var(--white);
+    color:var(--steel);
+    border:2px solid var(--steel);
+  }
+
+  .btn:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+  }
+
+  /* Activity 1: Sort the Thought */
+  .statement-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:16px;
+  }
+
+  .statement-card{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 14px;
+    border:2px solid #DDD;
+    border-radius:12px;
+    min-height:44px;
+    font-size:16px;
+    background:var(--bg-grey);
+    transition:border-color .2s ease, background .2s ease, transform .12s ease;
+  }
+
+  .statement-card .icon{
+    width:30px;
+    height:30px;
+    flex:none;
+    color:var(--steel);
+  }
+
+  .statement-card.selected{
+    border-color:var(--steel);
+    background:#EAF1F8;
+  }
+
+  .statement-card.correct{
+    border-color:var(--green);
+    background:#E7F3E8;
+  }
+
+  .statement-card.incorrect{
+    border-color:var(--red);
+    background:#FBEAE9;
+  }
+
+  .statement-card.solved{
+    opacity:0.85;
+  }
+
+  .statement-card .check{
+    margin-left:auto;
+    font-size:20px;
+    font-weight:bold;
+  }
+
+  .sort-buttons{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:10px;
+  }
+
+  .sort-buttons .btn{ flex:1; min-width:180px; }
+
+  .hint-msg{
+    font-size:15px;
+    font-weight:bold;
+    min-height:22px;
+    margin-top:6px;
+  }
+
+  .hint-msg.green{ color:var(--green); }
+  .hint-msg.red{ color:var(--red); }
+  .hint-msg.steel{ color:var(--steel); }
+
+  .progress-count{
+    font-weight:bold;
+    color:var(--maroon);
+    margin-top:8px;
+    font-size:16px;
+  }
+
+  /* Activity 2: Quiz */
+  .score-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--bg-grey);
+    border-radius:10px;
+    padding:10px 14px;
+    margin-bottom:16px;
+    font-weight:bold;
+    font-size:18px;
+    color:var(--maroon);
+  }
+
+  .quiz-q{
+    margin-bottom:22px;
+    padding-bottom:18px;
+    border-bottom:1px dashed #DDD;
+  }
+
+  .quiz-q:last-child{ border-bottom:none; }
+
+  .quiz-q p.qtext{
+    font-size:20px;
+    font-weight:bold;
+    margin:0 0 12px 0;
+    color:var(--text);
+  }
+
+  .quiz-options{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .quiz-option{
+    text-align:left;
+    background:var(--white);
+    border:2px solid #CCC;
+    border-radius:10px;
+    padding:10px 14px;
+    min-height:44px;
+    font-size:16px;
+    color:var(--text);
+  }
+
+  .quiz-option:hover:not(:disabled){ border-color:var(--steel); }
+
+  .quiz-option.correct{
+    border-color:var(--green);
+    background:#E7F3E8;
+    color:#1B5E20;
+    font-weight:bold;
+  }
+
+  .quiz-option.incorrect{
+    border-color:var(--red);
+    background:#FBEAE9;
+    color:#8E1E17;
+    font-weight:bold;
+  }
+
+  .quiz-explain{
+    margin-top:8px;
+    font-size:15px;
+    font-style:italic;
+    color:#555;
+    min-height:20px;
+  }
+
+  /* Activity 3: Put It In Order */
+  .order-bank{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+  }
+
+  .order-chip{
+    min-height:44px;
+    padding:10px 20px;
+    font-size:20px;
+    font-weight:bold;
+    border-radius:10px;
+    border:2px solid var(--steel);
+    background:var(--white);
+    color:var(--steel);
+  }
+
+  .order-chip:disabled{
+    opacity:0.35;
+    cursor:not-allowed;
+  }
+
+  .order-slots{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:16px;
+  }
+
+  .order-slot{
+    flex:1;
+    min-width:130px;
+    min-height:64px;
+    border:2px dashed #BBB;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:8px;
+    background:var(--bg-grey);
+    font-size:16px;
+    text-align:center;
+  }
+
+  .order-slot .num{
+    font-size:12px;
+    font-weight:bold;
+    color:#999;
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+
+  .order-slot .value{
+    font-size:18px;
+    font-weight:bold;
+    color:var(--text);
+  }
+
+  .order-slot.filled{ border-style:solid; border-color:var(--steel); }
+  .order-slot.correct{ border-color:var(--green); background:#E7F3E8; }
+  .order-slot.incorrect{ border-color:var(--red); background:#FBEAE9; }
+
+  .order-controls{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  .order-msg{
+    margin-top:12px;
+    font-size:16px;
+    font-weight:bold;
+    min-height:24px;
+  }
+
+  .order-msg.green{ color:var(--green); }
+  .order-msg.red{ color:var(--red); }
+
+  /* Activity 4: SOC Challenge */
+  .scenario-box{
+    background:var(--bg-grey);
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:14px;
+  }
+
+  .scenario-box p{
+    font-size:16px;
+    margin:0 0 8px 0;
+  }
+
+  .scenario-box p.prompt{
+    font-size:20px;
+    font-weight:bold;
+    color:var(--maroon);
+    margin-bottom:12px;
+  }
+
+  .scenario-options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .scenario-option{
+    text-align:left;
+    background:var(--white);
+    border:2px solid var(--steel);
+    color:var(--steel);
+    border-radius:10px;
+    padding:12px 14px;
+    min-height:44px;
+    font-size:16px;
+    font-weight:bold;
+  }
+
+  .scenario-option:hover:not(:disabled){ background:#EAF1F8; }
+  .scenario-option:disabled{ opacity:0.4; }
+
+  .scenario-feedback{
+    border-left:6px solid var(--amber);
+    background:#FFF8EC;
+    padding:10px 14px;
+    border-radius:8px;
+    margin-top:12px;
+    font-size:16px;
+  }
+
+  .scenario-feedback.gold{
+    border-left-color:var(--green);
+    background:#EEF6EE;
+  }
+
+  .scenario-feedback .kind{
+    font-weight:bold;
+    display:block;
+    margin-bottom:2px;
+  }
+
+  .scenario-feedback.gold .kind{ color:var(--green); }
+  .scenario-feedback:not(.gold) .kind{ color:var(--amber); }
+
+  .scenario-summary{
+    background:var(--white);
+    border:2px solid var(--maroon);
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+  }
+
+  .scenario-summary h3{
+    color:var(--maroon);
+    font-size:20px;
+    margin-top:0;
+  }
+
+  /* Student name box */
+  .name-box{
+    background:var(--bg-grey);
+    border:2px solid var(--maroon);
+  }
+
+  .name-box label{
+    display:block;
+    font-size:16px;
+    font-weight:bold;
+    color:var(--maroon);
+    margin-bottom:8px;
+  }
+
+  .name-input{
+    width:100%;
+    max-width:420px;
+    min-height:44px;
+    font-size:18px;
+    font-family:inherit;
+    padding:8px 14px;
+    border:2px solid var(--steel);
+    border-radius:10px;
+    color:var(--text);
+    background:var(--white);
+  }
+
+  .name-input:focus{
+    outline:3px solid var(--amber);
+    outline-offset:1px;
+  }
+
+  /* Results summary box */
+  .results-box{
+    border:3px solid var(--maroon);
+  }
+
+  .results-name{
+    font-size:20px;
+    font-weight:bold;
+    color:var(--maroon);
+    margin:0 0 14px 0;
+    padding-bottom:10px;
+    border-bottom:2px dashed #EEE6E9;
+  }
+
+  .results-table{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:16px;
+  }
+
+  .results-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    background:var(--bg-grey);
+    border-radius:10px;
+    padding:10px 14px;
+    font-size:16px;
+    flex-wrap:wrap;
+  }
+
+  .results-row .r-label{
+    font-weight:bold;
+    color:var(--text);
+  }
+
+  .results-row .r-value{
+    font-weight:bold;
+    color:var(--steel);
+    font-size:18px;
+  }
+
+  .screenshot-box{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    background:#FFF8EC;
+    border:2px solid var(--amber);
+    border-radius:12px;
+    padding:14px;
+    margin-top:6px;
+  }
+
+  .screenshot-box .cam-icon{
+    width:34px;
+    height:34px;
+    flex:none;
+  }
+
+  .screenshot-box p{
+    margin:0;
+    font-size:16px;
+  }
+
+  .screenshot-box p strong{ color:var(--amber); }
+
+  kbd{
+    display:inline-block;
+    background:var(--white);
+    border:2px solid #BBB;
+    border-radius:6px;
+    padding:1px 8px;
+    font-family:inherit;
+    font-size:14px;
+    font-weight:bold;
+    box-shadow:0 2px 0 #BBB;
+  }
+
+  footer.done-footer{
+    text-align:center;
+    color:#888;
+    font-size:14px;
+    padding:20px;
+  }
+
+  @media (max-width:600px){
+    header.top h1{ font-size:19px; }
+    .activity-head h2{ font-size:19px; }
+    .progress-step .label{ display:none; }
+    .sort-buttons .btn{ min-width:100%; }
+    .order-slot{ min-width:100px; }
+  }
+
+  @media (min-width:601px) and (max-width:1024px){
+    main{ padding:16px 24px 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <svg class="logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M24 4 L42 11 V22 C42 33 34.5 41 24 44 C13.5 41 6 33 6 22 V11 Z" fill="#B8860B" stroke="#FFFFFF" stroke-width="2"/>
+    <path d="M16 24 L21.5 29.5 L33 17" stroke="#FFFFFF" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div class="titles">
+    <p class="course-name">CT201 · Critical Thinking &amp; Problem Solving</p>
+    <h1>Lesson M1.1 Practice: What Is Critical Thinking?</h1>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track" id="progressTrack">
+    <div class="progress-step" data-step="1">
+      <div class="dot">1</div>
+      <div class="label">Sort</div>
+    </div>
+    <div class="progress-step" data-step="2">
+      <div class="dot">2</div>
+      <div class="label">Quiz</div>
+    </div>
+    <div class="progress-step" data-step="3">
+      <div class="dot">3</div>
+      <div class="label">Order</div>
+    </div>
+    <div class="progress-step" data-step="4">
+      <div class="dot">4</div>
+      <div class="label">SOC</div>
+    </div>
+    <div class="progress-step" data-step="5">
+      <div class="dot">5</div>
+      <div class="label">Results</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- STUDENT NAME -->
+  <section class="activity name-box" id="studentInfo">
+    <label for="studentName">Enter your name to begin:</label>
+    <input type="text" id="studentName" class="name-input" placeholder="Type your full name here" autocomplete="off">
+  </section>
+
+  <!-- ACTIVITY 1: SORT THE THOUGHT -->
+  <section class="activity" id="step1">
+    <div class="activity-head">
+      <svg class="icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="18" cy="18" r="12" stroke="#2E5F8A" stroke-width="3"/>
+        <line x1="27" y1="27" x2="36" y2="36" stroke="#2E5F8A" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <h2>Activity 1 · Sort the Thought</h2>
+    </div>
+    <p class="activity-sub">Read each statement. Click it, then click the thinking style it shows. Try as many times as you need.</p>
+
+    <div class="statement-list" id="statementList"></div>
+
+    <div class="sort-buttons">
+      <button class="btn amber" id="btnSponge">🧽 Sponge Thinking</button>
+      <button class="btn green" id="btnGold">⛏️ Panning-for-Gold Thinking</button>
+    </div>
+
+    <p class="hint-msg" id="sortHint"></p>
+    <p class="progress-count" id="sortCount">Sorted: 0 / 6</p>
+  </section>
+
+  <!-- ACTIVITY 2: QUICK QUIZ -->
+  <section class="activity" id="step2">
+    <div class="activity-head">
+      <svg class="icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="20" cy="20" r="17" stroke="#8D183C" stroke-width="3"/>
+        <text x="20" y="27" text-anchor="middle" font-size="20" font-family="Arial" font-weight="bold" fill="#8D183C">?</text>
+      </svg>
+      <h2>Activity 2 · Quick Quiz</h2>
+    </div>
+    <p class="activity-sub">Choose one answer for each question. You will see if you are right away.</p>
+
+    <div class="score-bar">
+      <span>Your Score</span>
+      <span id="scoreText">0 / 5</span>
+    </div>
+
+    <div id="quizList"></div>
+  </section>
+
+  <!-- ACTIVITY 3: PUT IT IN ORDER -->
+  <section class="activity" id="step3">
+    <div class="activity-head">
+      <svg class="icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="6" y="8" width="28" height="5" rx="2.5" fill="#2E5F8A"/>
+        <rect x="6" y="18" width="20" height="5" rx="2.5" fill="#2E5F8A"/>
+        <rect x="6" y="28" width="14" height="5" rx="2.5" fill="#2E5F8A"/>
+      </svg>
+      <h2>Activity 3 · Put It In Order</h2>
+    </div>
+    <p class="activity-sub">Critical thinking has three parts. Click them in the correct order, then press Check.</p>
+
+    <div class="order-bank" id="orderBank"></div>
+
+    <div class="order-slots">
+      <div class="order-slot" data-slot="0"><span class="num">Step 1</span><span class="value">—</span></div>
+      <div class="order-slot" data-slot="1"><span class="num">Step 2</span><span class="value">—</span></div>
+      <div class="order-slot" data-slot="2"><span class="num">Step 3</span><span class="value">—</span></div>
+    </div>
+
+    <div class="order-controls">
+      <button class="btn maroon" id="btnCheckOrder">Check</button>
+      <button class="btn outline" id="btnResetOrder">Reset</button>
+    </div>
+
+    <p class="order-msg" id="orderMsg"></p>
+  </section>
+
+  <!-- ACTIVITY 4: SOC CHALLENGE -->
+  <section class="activity" id="step4">
+    <div class="activity-head">
+      <svg class="icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="5" y="10" width="30" height="20" rx="3" stroke="#8D183C" stroke-width="3" fill="none"/>
+        <circle cx="14" cy="20" r="2.4" fill="#8D183C"/>
+        <circle cx="20" cy="20" r="2.4" fill="#8D183C"/>
+        <circle cx="26" cy="20" r="2.4" fill="#8D183C"/>
+      </svg>
+      <h2>Activity 4 · SOC Challenge</h2>
+    </div>
+    <p class="activity-sub">You are a SOC analyst. Make choices and see what kind of thinker you are.</p>
+
+    <div id="scenarioArea"></div>
+  </section>
+
+  <!-- RESULTS SUMMARY -->
+  <section class="activity results-box" id="resultsSection">
+    <div class="activity-head">
+      <svg class="icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="7" y="6" width="26" height="30" rx="3" stroke="#8D183C" stroke-width="3" fill="none"/>
+        <path d="M13 17 L18 22 L27 12" stroke="#2E7D32" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h2>Results Summary</h2>
+    </div>
+    <p class="activity-sub">This box updates as you complete each activity above.</p>
+
+    <p class="results-name" id="resultsName">Student: —</p>
+
+    <div class="results-table">
+      <div class="results-row"><span class="r-label">1. Sort the Thought</span><span class="r-value" id="resSort">0 / 6</span></div>
+      <div class="results-row"><span class="r-label">2. Quick Quiz</span><span class="r-value" id="resQuiz">0 / 5</span></div>
+      <div class="results-row"><span class="r-label">3. Put It In Order</span><span class="r-value" id="resOrder">Not checked yet</span></div>
+      <div class="results-row"><span class="r-label">4. SOC Challenge</span><span class="r-value" id="resSoc">0 / 3 gold choices</span></div>
+    </div>
+
+    <div class="screenshot-box">
+      <svg class="cam-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="4" y="12" width="32" height="21" rx="3" stroke="#B8860B" stroke-width="3" fill="none"/>
+        <rect x="14" y="7" width="12" height="6" rx="2" stroke="#B8860B" stroke-width="3" fill="none"/>
+        <circle cx="20" cy="22.5" r="6.5" stroke="#B8860B" stroke-width="3" fill="none"/>
+      </svg>
+      <p><strong>Take a screenshot of this box</strong> and send it to your instructor as proof of completion.<br>
+      Windows: press <kbd>Win</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>. Mac: press <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>4</kbd>.</p>
+    </div>
+  </section>
+
+  <footer class="done-footer">CT201 · Lesson M1.1 Practice — offline activity, no internet needed.</footer>
+
+</main>
+
+<script>
+(function(){
+
+  /* ---------- PROGRESS BAR (scroll-based) ---------- */
+  var steps = document.querySelectorAll('.progress-step');
+  var sections = ['step1','step2','step3','step4','resultsSection'].map(function(id){ return document.getElementById(id); });
+
+  function setActiveStep(idx){
+    steps.forEach(function(s, i){
+      s.classList.remove('active');
+      if(i < idx) s.classList.add('done');
+      if(i === idx){ s.classList.add('active'); s.classList.remove('done'); }
+    });
+  }
+  setActiveStep(0);
+
+  if('IntersectionObserver' in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          var idx = sections.indexOf(entry.target);
+          if(idx !== -1) setActiveStep(idx);
+        }
+      });
+    }, { root:null, threshold:0.35, rootMargin:'-80px 0px -40% 0px' });
+    sections.forEach(function(sec){ if(sec) observer.observe(sec); });
+  }
+
+  /* ---------- SHARED HELPERS ---------- */
+  function shuffleArray(arr){
+    var a = arr.slice();
+    for(var i = a.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  /* ---------- STUDENT NAME + RESULTS ---------- */
+  var studentName = '';
+  var nameInputEl = document.getElementById('studentName');
+  var resultsNameEl = document.getElementById('resultsName');
+  var resSortEl = document.getElementById('resSort');
+  var resQuizEl = document.getElementById('resQuiz');
+  var resOrderEl = document.getElementById('resOrder');
+  var resSocEl = document.getElementById('resSoc');
+
+  var results = { sort: 0, sortTotal: 6, quiz: 0, quizTotal: 5, orderDone: false, orderCorrect: false, socGold: 0, socTotal: 3 };
+
+  function renderResults(){
+    resultsNameEl.textContent = 'Student: ' + (studentName ? studentName : '—');
+    resSortEl.textContent = results.sort + ' / ' + results.sortTotal;
+    resQuizEl.textContent = results.quiz + ' / ' + results.quizTotal;
+    resOrderEl.textContent = !results.orderDone ? 'Not checked yet' : (results.orderCorrect ? 'Correct' : 'Incorrect');
+    resSocEl.textContent = results.socGold + ' / ' + results.socTotal + ' gold choices';
+  }
+
+  nameInputEl.addEventListener('input', function(){
+    studentName = nameInputEl.value.trim();
+    renderResults();
+  });
+
+  renderResults();
+
+  /* ---------- ICON HELPERS ---------- */
+  function alertIconSVG(){
+    return '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path d="M12 3 L22 20 H2 Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' +
+      '<line x1="12" y1="9" x2="12" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
+      '<circle cx="12" cy="17.3" r="1.15" fill="currentColor"/>' +
+      '</svg>';
+  }
+
+  /* ---------- ACTIVITY 1: SORT THE THOUGHT ---------- */
+  var statementsSource = [
+    { text: "The analyst closes the alert because the tool marked it low risk.", cat: "sponge" },
+    { text: "He copies the vendor's report without checking the file hash himself.", cat: "sponge" },
+    { text: "She trusts a coworker's guess and skips reading the log files.", cat: "sponge" },
+    { text: "The analyst checks three sources before believing the alert is real.", cat: "gold" },
+    { text: "She asks why the network traffic spiked before closing the ticket.", cat: "gold" },
+    { text: "He compares the IP address to threat feeds before trusting the report.", cat: "gold" }
+  ];
+
+  var statements = shuffleArray(statementsSource);
+
+  var selectedStatement = null;
+  var solvedCount = 0;
+
+  var listEl = document.getElementById('statementList');
+  var hintEl = document.getElementById('sortHint');
+  var countEl = document.getElementById('sortCount');
+
+  function renderStatements(){
+    listEl.innerHTML = '';
+    statements.forEach(function(st, idx){
+      var card = document.createElement('div');
+      card.className = 'statement-card';
+      card.setAttribute('data-idx', idx);
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.innerHTML = '<span class="icon">' + alertIconSVG() + '</span>' +
+        '<span class="txt">' + st.text + '</span>' +
+        '<span class="check"></span>';
+      listEl.appendChild(card);
+    });
+  }
+  renderStatements();
+
+  listEl.addEventListener('click', function(e){
+    var card = e.target.closest('.statement-card');
+    if(!card) return;
+    if(card.classList.contains('solved')) return;
+    Array.prototype.forEach.call(listEl.children, function(c){ c.classList.remove('selected'); });
+    card.classList.add('selected');
+    selectedStatement = parseInt(card.getAttribute('data-idx'), 10);
+    hintEl.textContent = 'Now choose a thinking style for this statement.';
+    hintEl.className = 'hint-msg steel';
+  });
+
+  function trySort(chosenCat){
+    if(selectedStatement === null){
+      hintEl.textContent = 'Select a statement first, then choose a thinking style.';
+      hintEl.className = 'hint-msg red';
+      return;
+    }
+    var card = listEl.querySelector('.statement-card[data-idx="' + selectedStatement + '"]');
+    var st = statements[selectedStatement];
+    if(st.cat === chosenCat){
+      card.classList.remove('incorrect');
+      card.classList.add('correct', 'solved');
+      card.querySelector('.check').textContent = '✔';
+      card.style.color = '#1B5E20';
+      solvedCount++;
+      countEl.textContent = 'Sorted: ' + solvedCount + ' / 6';
+      hintEl.textContent = 'Nice work! That is correct.';
+      hintEl.className = 'hint-msg green';
+      selectedStatement = null;
+      results.sort = solvedCount;
+      renderResults();
+      if(solvedCount === 6){
+        hintEl.textContent = 'All six statements sorted. Great thinking!';
+      }
+    } else {
+      card.classList.add('incorrect');
+      hintEl.textContent = 'Not quite. Look again and try another style.';
+      hintEl.className = 'hint-msg red';
+      setTimeout(function(){ card.classList.remove('incorrect'); }, 700);
+    }
+  }
+
+  document.getElementById('btnSponge').addEventListener('click', function(){ trySort('sponge'); });
+  document.getElementById('btnGold').addEventListener('click', function(){ trySort('gold'); });
+
+  /* ---------- ACTIVITY 2: QUICK QUIZ ---------- */
+  var quiz = [
+    {
+      q: "What is critical thinking?",
+      options: [
+        { t: "A set of skills to analyze, evaluate, and make good decisions", c: true, e: "Correct! That is the definition." },
+        { t: "A method for memorizing every fact before an important test", c: false, e: "Memorizing facts is not the same as critical thinking." },
+        { t: "A quick guess made without checking any evidence at all", c: false, e: "Guessing quickly skips the analysis step." },
+        { t: "A fixed personality trait people are simply born with forever", c: false, e: "Critical thinking is a learned skill, not a fixed trait." }
+      ]
+    },
+    {
+      q: "What is the first part of critical thinking?",
+      options: [
+        { t: "Awareness of the right critical questions to ask", c: true, e: "Correct! You must first know which questions matter." },
+        { t: "Desire to think carefully about every tough problem you face", c: false, e: "Desire comes after you are aware of the right questions." },
+        { t: "Ability to answer any question quickly without thinking", c: false, e: "Ability comes after awareness, as the second part." },
+        { t: "Memory of facts learned years ago in school", c: false, e: "Memory alone is not the first part." }
+      ]
+    },
+    {
+      q: "What does the \"ability\" part of critical thinking mean?",
+      options: [
+        { t: "Being able to ask and answer the right critical questions", c: true, e: "Correct! Ability means you can actually do it." },
+        { t: "Knowing that critical questions exist somewhere out there", c: false, e: "That is awareness, not ability." },
+        { t: "Wanting to think more carefully about problems each day", c: false, e: "Wanting to think is the desire part." },
+        { t: "Ignoring facts and opinions that do not match your own view", c: false, e: "Ignoring information is the opposite of critical thinking." }
+      ]
+    },
+    {
+      q: "What does the \"desire\" part of critical thinking mean?",
+      options: [
+        { t: "Wanting to actually use critical thinking in daily life", c: true, e: "Correct! Desire means you choose to use it." },
+        { t: "Having memorized many important facts and figures", c: false, e: "Facts alone do not create desire to think critically." },
+        { t: "Being naturally gifted at solving every hard problem", c: false, e: "Critical thinking is a choice and a skill, not just talent." },
+        { t: "Avoiding questions that feel uncomfortable or difficult", c: false, e: "Avoiding questions is the opposite of desire." }
+      ]
+    },
+    {
+      q: "A person has awareness and ability, but no desire. What happens?",
+      options: [
+        { t: "They rarely use critical thinking in real situations", c: true, e: "Correct! Knowing how is not enough without the will to do it." },
+        { t: "They always think critically without any real effort", c: false, e: "Without desire, they often will not use the skill." },
+        { t: "They become an expert thinker again right away", c: false, e: "Skill alone does not create expertise without practice." },
+        { t: "They forget every critical question they ever learned", c: false, e: "They can still remember questions, but may not use them." }
+      ]
+    }
+  ];
+
+  var score = 0;
+  var quizListEl = document.getElementById('quizList');
+  var scoreTextEl = document.getElementById('scoreText');
+
+  quiz.forEach(function(item, qIdx){
+    var block = document.createElement('div');
+    block.className = 'quiz-q';
+
+    var qtext = document.createElement('p');
+    qtext.className = 'qtext';
+    qtext.textContent = (qIdx + 1) + '. ' + item.q;
+    block.appendChild(qtext);
+
+    var optWrap = document.createElement('div');
+    optWrap.className = 'quiz-options';
+
+    var explainEl = document.createElement('p');
+    explainEl.className = 'quiz-explain';
+
+    var answered = false;
+    var shuffledOptions = shuffleArray(item.options);
+
+    shuffledOptions.forEach(function(opt){
+      var btn = document.createElement('button');
+      btn.className = 'quiz-option';
+      btn.textContent = opt.t;
+      btn.addEventListener('click', function(){
+        if(answered) return;
+        answered = true;
+        Array.prototype.forEach.call(optWrap.children, function(b){ b.disabled = true; });
+        if(opt.c){
+          btn.classList.add('correct');
+          score++;
+        } else {
+          btn.classList.add('incorrect');
+          var correctBtn = Array.prototype.find.call(optWrap.children, function(b, i){ return shuffledOptions[i].c; });
+          if(correctBtn) correctBtn.classList.add('correct');
+        }
+        explainEl.textContent = opt.e;
+        scoreTextEl.textContent = score + ' / 5';
+        results.quiz = score;
+        renderResults();
+      });
+      optWrap.appendChild(btn);
+    });
+
+    block.appendChild(optWrap);
+    block.appendChild(explainEl);
+    quizListEl.appendChild(block);
+  });
+
+  /* ---------- ACTIVITY 3: PUT IT IN ORDER ---------- */
+  var correctOrder = ['Awareness', 'Ability', 'Desire'];
+  var shuffled = ['Ability', 'Desire', 'Awareness'];
+  var currentOrder = [];
+
+  var bankEl = document.getElementById('orderBank');
+  var slotEls = document.querySelectorAll('.order-slot');
+  var orderMsgEl = document.getElementById('orderMsg');
+
+  function renderBank(){
+    bankEl.innerHTML = '';
+    shuffled.forEach(function(word){
+      var chip = document.createElement('button');
+      chip.className = 'order-chip';
+      chip.textContent = word;
+      chip.setAttribute('data-word', word);
+      if(currentOrder.indexOf(word) !== -1) chip.disabled = true;
+      chip.addEventListener('click', function(){
+        if(currentOrder.length >= 3 || currentOrder.indexOf(word) !== -1) return;
+        currentOrder.push(word);
+        renderSlots();
+        renderBank();
+      });
+      bankEl.appendChild(chip);
+    });
+  }
+
+  function renderSlots(){
+    slotEls.forEach(function(slot, i){
+      var valueEl = slot.querySelector('.value');
+      slot.classList.remove('filled', 'correct', 'incorrect');
+      if(currentOrder[i]){
+        valueEl.textContent = currentOrder[i];
+        slot.classList.add('filled');
+      } else {
+        valueEl.textContent = '—';
+      }
+    });
+  }
+
+  document.getElementById('btnCheckOrder').addEventListener('click', function(){
+    if(currentOrder.length < 3){
+      orderMsgEl.textContent = 'Place all three parts before checking.';
+      orderMsgEl.className = 'order-msg red';
+      return;
+    }
+    var allCorrect = true;
+    slotEls.forEach(function(slot, i){
+      slot.classList.remove('correct', 'incorrect');
+      if(currentOrder[i] === correctOrder[i]){
+        slot.classList.add('correct');
+      } else {
+        slot.classList.add('incorrect');
+        allCorrect = false;
+      }
+    });
+    if(allCorrect){
+      orderMsgEl.textContent = 'Well done! Awareness, then Ability, then Desire.';
+      orderMsgEl.className = 'order-msg green';
+    } else {
+      orderMsgEl.textContent = 'Not quite the right order yet. Press Reset and try again.';
+      orderMsgEl.className = 'order-msg red';
+    }
+    results.orderDone = true;
+    results.orderCorrect = allCorrect;
+    renderResults();
+  });
+
+  document.getElementById('btnResetOrder').addEventListener('click', function(){
+    currentOrder = [];
+    orderMsgEl.textContent = '';
+    orderMsgEl.className = 'order-msg';
+    renderBank();
+    renderSlots();
+  });
+
+  renderBank();
+  renderSlots();
+
+  /* ---------- ACTIVITY 4: SOC CHALLENGE ---------- */
+  var scenarioArea = document.getElementById('scenarioArea');
+
+  var scenarioSteps = [
+    {
+      prompt: "An alert shows an unknown IP tried to log in 50 times in one minute. What do you do first?",
+      options: [
+        { t: "Close the alert. It is probably a mistake.", type: "sponge",
+          fb: "That is sponge thinking. You accepted the alert without checking it." },
+        { t: "Check the IP address against threat intel sources.", type: "gold",
+          fb: "That is panning-for-gold thinking. You are questioning the alert before deciding." }
+      ]
+    },
+    {
+      prompt: "The IP matches a list of known internet scanners. What next?",
+      options: [
+        { t: "Assume it is harmless because it is just a scanner.", type: "sponge",
+          fb: "That is sponge thinking. A known scanner can still be a real risk." },
+        { t: "Ask why this scanner is targeting your system now.", type: "gold",
+          fb: "That is panning-for-gold thinking. Good analysts ask why, not just what." }
+      ]
+    },
+    {
+      prompt: "Your manager wants a short report on the alert. What do you include?",
+      options: [
+        { t: "Just copy the automatic alert summary.", type: "sponge",
+          fb: "That is sponge thinking. A copy-paste report skips your own judgment." },
+        { t: "Add your own analysis of why this alert matters.", type: "gold",
+          fb: "That is panning-for-gold thinking. Your analysis adds real value." }
+      ]
+    }
+  ];
+
+  var scenarioState = { stepIndex: 0, goldCount: 0, spongeCount: 0 };
+
+  function renderScenario(){
+    scenarioArea.innerHTML = '';
+
+    if(scenarioState.stepIndex >= scenarioSteps.length){
+      renderScenarioSummary();
+      return;
+    }
+
+    var step = scenarioSteps[scenarioState.stepIndex];
+    var box = document.createElement('div');
+    box.className = 'scenario-box';
+
+    var badge = document.createElement('span');
+    badge.className = 'badge';
+    badge.textContent = 'Decision ' + (scenarioState.stepIndex + 1) + ' of ' + scenarioSteps.length;
+    box.appendChild(badge);
+
+    var promptEl = document.createElement('p');
+    promptEl.className = 'prompt';
+    promptEl.textContent = step.prompt;
+    box.appendChild(promptEl);
+
+    var optsEl = document.createElement('div');
+    optsEl.className = 'scenario-options';
+
+    var feedbackEl = document.createElement('div');
+    feedbackEl.style.display = 'none';
+
+    var answered = false;
+
+    step.options.forEach(function(opt){
+      var btn = document.createElement('button');
+      btn.className = 'scenario-option';
+      btn.textContent = opt.t;
+      btn.addEventListener('click', function(){
+        if(answered) return;
+        answered = true;
+        Array.prototype.forEach.call(optsEl.children, function(b){ b.disabled = true; });
+
+        if(opt.type === 'gold') scenarioState.goldCount++;
+        else scenarioState.spongeCount++;
+
+        results.socGold = scenarioState.goldCount;
+        renderResults();
+
+        var fbBox = document.createElement('div');
+        fbBox.className = 'scenario-feedback' + (opt.type === 'gold' ? ' gold' : '');
+        fbBox.innerHTML = '<span class="kind">' + (opt.type === 'gold' ? 'Panning-for-Gold' : 'Sponge') + '</span>' + opt.fb;
+        box.appendChild(fbBox);
+
+        var nextBtn = document.createElement('button');
+        nextBtn.className = 'btn maroon';
+        nextBtn.style.marginTop = '14px';
+        nextBtn.textContent = (scenarioState.stepIndex === scenarioSteps.length - 1) ? 'See Summary' : 'Continue';
+        nextBtn.addEventListener('click', function(){
+          scenarioState.stepIndex++;
+          renderScenario();
+        });
+        box.appendChild(nextBtn);
+      });
+      optsEl.appendChild(btn);
+    });
+
+    box.appendChild(optsEl);
+    scenarioArea.appendChild(box);
+  }
+
+  function renderScenarioSummary(){
+    var box = document.createElement('div');
+    box.className = 'scenario-summary';
+
+    var title = document.createElement('h3');
+    title.textContent = 'Challenge Complete!';
+    box.appendChild(title);
+
+    var msg = document.createElement('p');
+    var gold = scenarioState.goldCount;
+    var total = scenarioSteps.length;
+    if(gold === total){
+      msg.textContent = 'Excellent! You used panning-for-gold thinking in all ' + total + ' decisions. You question before you trust.';
+    } else if(gold >= 2){
+      msg.textContent = 'Good work! You used panning-for-gold thinking in ' + gold + ' of ' + total + ' decisions. Keep asking why.';
+    } else {
+      msg.textContent = 'You used panning-for-gold thinking in ' + gold + ' of ' + total + ' decisions. Try to question alerts more before you trust them.';
+    }
+    box.appendChild(msg);
+
+    var tryBtn = document.createElement('button');
+    tryBtn.className = 'btn amber';
+    tryBtn.style.marginTop = '10px';
+    tryBtn.textContent = 'Try Again';
+    tryBtn.addEventListener('click', function(){
+      scenarioState = { stepIndex: 0, goldCount: 0, spongeCount: 0 };
+      results.socGold = 0;
+      renderResults();
+      renderScenario();
+    });
+    box.appendChild(tryBtn);
+
+    scenarioArea.appendChild(box);
+  }
+
+  renderScenario();
+
+})();
+</script>
+
+</body>
+</html>
